@@ -1,0 +1,274 @@
+.temp-address-page {
+  flex: 1;
+  max-width: 950px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.page-title {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #1a1a2e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.title-icon {
+  color: #38b2ac;
+  font-size: 2rem;
+}
+
+.page-subtitle {
+  color: #64748b;
+  font-size: 0.95rem;
+  margin-top: 0.5rem;
+}
+
+.controls-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.location-display {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 0.7rem 1.2rem;
+  color: #38b2ac;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.location-display span {
+  color: #1e293b;
+}
+
+.regenerate-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.4rem;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #38b2ac, #2c9a8f);
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'Inter', sans-serif;
+}
+
+.regenerate-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(56, 178, 172, 0.3);
+}
+
+.section {
+  margin-bottom: 2.5rem;
+}
+
+.section-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #2d3748;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.2rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 2px solid #e8eaed;
+}
+
+.section-title svg {
+  color: #38b2ac;
+}
+
+.address-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.2rem;
+}
+
+.address-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 1.5rem;
+  border: 1.5px solid #e8eaed;
+  transition: all 0.2s ease;
+}
+
+.address-card:hover {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  border-color: #38b2ac;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding-bottom: 0.7rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.card-number {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #38b2ac;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.copy-all-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.35rem 0.8rem;
+  border: 1.5px solid #38b2ac;
+  border-radius: 6px;
+  background: transparent;
+  color: #38b2ac;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'Inter', sans-serif;
+}
+
+.copy-all-btn:hover {
+  background: #38b2ac;
+  color: white;
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.field-row {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0.6rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.field-row:hover {
+  background: #f0fdfa;
+}
+
+.field-row:hover .field-copy {
+  opacity: 1;
+}
+
+.field-label {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  font-weight: 600;
+  min-width: 80px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.field-value {
+  flex: 1;
+  font-size: 0.88rem;
+  color: #1e293b;
+  font-weight: 500;
+}
+
+.field-copy {
+  font-size: 0.85rem;
+  color: #38b2ac;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.phone-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.phone-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1.2rem 1.5rem;
+  border: 1.5px solid #e8eaed;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.phone-card:hover {
+  border-color: #38b2ac;
+  box-shadow: 0 4px 15px rgba(56, 178, 172, 0.15);
+  transform: translateY(-2px);
+}
+
+.phone-number {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #1e293b;
+  letter-spacing: 0.5px;
+}
+
+.phone-copy-icon {
+  color: #38b2ac;
+  font-size: 1.1rem;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+
+.phone-card:hover .phone-copy-icon {
+  opacity: 1;
+}
+
+.loading-state {
+  text-align: center;
+  padding: 3rem;
+  color: #64748b;
+  font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+  .temp-address-page {
+    padding: 1.5rem 1rem;
+  }
+
+  .page-title {
+    font-size: 1.4rem;
+  }
+
+  .address-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .phone-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .controls-bar {
+    flex-direction: column;
+  }
+}

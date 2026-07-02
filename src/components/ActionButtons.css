@@ -1,0 +1,68 @@
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1.3rem;
+  border: none;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #4a5568;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'Inter', sans-serif;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  border: 1px solid #e8eaed;
+}
+
+.action-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.action-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.action-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.action-btn.refresh-btn:hover:not(:disabled) {
+  color: #6c63ff;
+  border-color: #6c63ff;
+}
+
+.action-btn.change-btn:hover:not(:disabled) {
+  color: #e67e22;
+  border-color: #e67e22;
+}
+
+.action-btn.delete-btn:hover:not(:disabled) {
+  color: #e74c3c;
+  border-color: #e74c3c;
+}
+
+.action-icon {
+  font-size: 1.15rem;
+}
+
+@media (max-width: 768px) {
+  .action-buttons {
+    gap: 0.5rem;
+  }
+
+  .action-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+  }
+}

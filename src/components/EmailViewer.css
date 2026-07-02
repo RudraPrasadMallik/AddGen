@@ -1,0 +1,136 @@
+.email-viewer {
+  background: #ffffff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  border: 1px solid #e8eaed;
+}
+
+.viewer-header {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #f0f2f5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.back-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #f7f8fa;
+  border: 1px solid #e8eaed;
+  color: #6c63ff;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.2s ease;
+}
+
+.back-btn:hover {
+  background: #6c63ff;
+  color: #ffffff;
+  border-color: #6c63ff;
+}
+
+.viewer-date {
+  font-size: 0.78rem;
+  color: #a0aec0;
+}
+
+.viewer-content {
+  padding: 1.5rem;
+}
+
+.viewer-subject-bar {
+  margin-bottom: 1.2rem;
+}
+
+.viewer-subject {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #2d3748;
+}
+
+.viewer-meta {
+  border-bottom: 1px solid #f0f2f5;
+  padding-bottom: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+.sender-info {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.sender-avatar-large {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #6c63ff, #4834d4);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.sender-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.sender-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.sender-label {
+  font-size: 0.75rem;
+  color: #a0aec0;
+}
+
+.viewer-body {
+  background: #f9fafb;
+  border-radius: 12px;
+  padding: 1.8rem;
+  min-height: 200px;
+  border: 1px solid #f0f2f5;
+}
+
+.email-body-content {
+  color: #4a5568;
+  font-size: 0.9rem;
+  line-height: 1.8;
+  word-wrap: break-word;
+}
+
+.email-body-content a {
+  color: #6c63ff;
+}
+
+.email-body-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+  .viewer-content {
+    padding: 1rem;
+  }
+
+  .viewer-body {
+    padding: 1.2rem;
+  }
+
+  .viewer-subject {
+    font-size: 1rem;
+  }
+}
