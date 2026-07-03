@@ -1,9 +1,14 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MdEmail, MdLocationOn, MdArrowForward, MdShield, MdSpeed, MdDevices, MdVpnKey } from 'react-icons/md';
+import { MdEmail, MdLocationOn, MdArrowForward, MdShield, MdSpeed, MdDevices, MdVpnKey, MdLock, MdWebhook, MdCode } from 'react-icons/md';
+import { useSEO } from '../utils/useSEO';
 import './Home.css';
 
 function Home() {
+  useSEO({
+    title: 'Free Temp Mail, Address & Developer Tools',
+    description: 'TestNest is a free developer toolkit. Generate temporary emails, fake addresses, phone numbers, JWT tokens, PKCE codes, webhook URLs, and Base64 encoding — no signup required.',
+  });
   const navigate = useNavigate();
 
   const tools = [
@@ -36,6 +41,36 @@ function Home() {
       gradient: 'linear-gradient(135deg, #e67e22, #d35400)',
       path: '/pkce',
       tag: 'Security',
+    },
+    {
+      id: 'jwt',
+      icon: <MdLock />,
+      title: 'JWT Tool',
+      description: 'Encode, decode, and verify JSON Web Tokens with all standard signing algorithms.',
+      color: '#dc2626',
+      gradient: 'linear-gradient(135deg, #dc2626, #b91c1c)',
+      path: '/jwt',
+      tag: 'Auth',
+    },
+    {
+      id: 'webhook',
+      icon: <MdWebhook />,
+      title: 'Webhook Tester',
+      description: 'Get a unique URL to capture and inspect incoming webhook requests in real-time.',
+      color: '#7c3aed',
+      gradient: 'linear-gradient(135deg, #7c3aed, #6d28d9)',
+      path: '/webhook',
+      tag: 'Integration',
+    },
+    {
+      id: 'base64',
+      icon: <MdCode />,
+      title: 'Base64 Encoder/Decoder',
+      description: 'Encode text to Base64 or decode Base64 strings back to plain text.',
+      color: '#0891b2',
+      gradient: 'linear-gradient(135deg, #0891b2, #0e7490)',
+      path: '/base64',
+      tag: 'Utility',
     },
   ];
 

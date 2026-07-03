@@ -8,6 +8,9 @@ import Home from './pages/Home';
 import TempMail from './pages/TempMail';
 import TempAddress from './pages/TempAddress';
 import PKCEGenerator from './pages/PKCEGenerator';
+import JWTTool from './pages/JWTTool';
+import WebhookTester from './pages/WebhookTester';
+import Base64Tool from './pages/Base64Tool';
 import './App.css';
 
 function App() {
@@ -20,6 +23,9 @@ function App() {
           <Route path="/temp-mail" element={<TempMail />} />
           <Route path="/temp-address" element={<TempAddress />} />
           <Route path="/pkce" element={<PKCEGenerator />} />
+          <Route path="/jwt" element={<JWTTool />} />
+          <Route path="/webhook" element={<WebhookTester />} />
+          <Route path="/base64" element={<Base64Tool />} />
         </Routes>
         <Footer />
         <ToastContainer

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { MdContentCopy, MdVpnKey, MdLock, MdInfo } from 'react-icons/md';
+import { useSEO } from '../utils/useSEO';
 import './PKCEGenerator.css';
 
 // Generate a cryptographically random code_verifier (43-128 chars, URL-safe)
@@ -38,6 +39,10 @@ function base64UrlEncode(buffer) {
 }
 
 function PKCEGenerator() {
+  useSEO({
+    title: 'Free PKCE Code Challenge & Verifier Generator',
+    description: 'Generate PKCE code_verifier and code_challenge pairs for OAuth 2.0 authorization flows. Supports S256 and Plain methods. Free online tool.',
+  });
   const [verifier, setVerifier] = useState('');
   const [challenge, setChallenge] = useState('');
   const [method, setMethod] = useState('S256');

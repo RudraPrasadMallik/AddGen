@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { MdEmail, MdLocationOn, MdHome, MdVpnKey } from 'react-icons/md';
+import { MdEmail, MdLocationOn, MdHome, MdVpnKey, MdLock, MdWebhook, MdCode } from 'react-icons/md';
 import './Header.css';
 
 function Header() {
@@ -33,6 +33,18 @@ function Header() {
           <Link to="/pkce" className={`nav-link ${isActive('/pkce') ? 'active' : ''}`}>
             <MdVpnKey />
             <span>PKCE</span>
+          </Link>
+          <Link to="/jwt" className={`nav-link ${isActive('/jwt') ? 'active' : ''}`}>
+            <MdLock />
+            <span>JWT</span>
+          </Link>
+          <Link to="/webhook" className={`nav-link ${isActive('/webhook') ? 'active' : ''}`}>
+            <MdWebhook />
+            <span>Webhook</span>
+          </Link>
+          <Link to="/base64" className={`nav-link ${isActive('/base64') ? 'active' : ''}`}>
+            <MdCode />
+            <span>Base64</span>
           </Link>
         </nav>
       </div>

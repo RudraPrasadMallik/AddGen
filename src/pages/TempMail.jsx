@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { toast } from 'react-toastify';
+import { useSEO } from '../utils/useSEO';
 import EmailDisplay from '../components/EmailDisplay';
 import ActionButtons from '../components/ActionButtons';
 import Inbox from '../components/Inbox';
@@ -9,6 +10,10 @@ import { getOrAssignEmail, changeEmail, getInbox, deleteInbox, API_BASE_URL } fr
 import { getSessionId } from '../utils/session';
 
 function TempMail() {
+  useSEO({
+    title: 'Free Temporary Email - Disposable Inbox',
+    description: 'Get a free disposable temporary email address instantly. Receive emails, protect your privacy. No registration needed. Emails auto-expire after 1 hour.',
+  });
   const [email, setEmail] = useState('');
   const [inbox, setInbox] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -148,6 +153,9 @@ function TempMail() {
 
   return (
     <main className="main-content">
+      <div className="coming-soon-banner">
+        🚀 Real email receiving coming soon — currently in local testing mode.
+      </div>
       <div className="email-section">
         <EmailDisplay email={email} loading={loading} onCopy={handleCopy} />
         <ActionButtons

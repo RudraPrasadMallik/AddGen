@@ -18,6 +18,18 @@ export default defineConfig({
         target: 'http://localhost:3000',
         changeOrigin: true,
       },
+      '/jwt': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+      },
+      '/webhook-api': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+      },
+      '/webhook': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+      },
       '/socket.io': {
         target: 'http://localhost:3000',
         changeOrigin: true,

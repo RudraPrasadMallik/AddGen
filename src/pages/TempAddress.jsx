@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { MdContentCopy, MdRefresh, MdLocationOn, MdPhone, MdMyLocation } from 'react-icons/md';
+import { useSEO } from '../utils/useSEO';
 import './TempAddress.css';
 
 // City-specific data: areas, streets, mandals, taluks, pin prefixes
@@ -216,6 +217,10 @@ function findClosestCity(detectedCity, countryCode) {
 }
 
 function TempAddress() {
+  useSEO({
+    title: 'Free Temporary Address & Phone Number Generator',
+    description: 'Generate fake temporary addresses and phone numbers based on your location. Supports India, US, UK cities. Perfect for form testing and development.',
+  });
   const [addresses, setAddresses] = useState([]);
   const [phones, setPhones] = useState([]);
   const [selectedCity, setSelectedCity] = useState('');
