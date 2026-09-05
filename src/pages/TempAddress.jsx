@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { toast } from 'react-toastify';
-import { MdContentCopy, MdRefresh, MdLocationOn, MdPhone, MdMyLocation } from 'react-icons/md';
+import { MdContentCopy, MdRefresh, MdLocationOn, MdPhone, MdMyLocation, MdSearch, MdDataObject, MdStorage } from 'react-icons/md';
 import { useSEO } from '../utils/useSEO';
 import './TempAddress.css';
+
+// How many random addresses to generate per city (matches reference sites)
+const ADDRESS_COUNT = 20;
 
 // City-specific data: areas, streets, mandals, taluks, pin prefixes
 const CITY_DETAILS = {
@@ -55,6 +58,27 @@ const CITY_DETAILS = {
     streets: ['AJC Bose Road', 'Park Street', 'EM Bypass', 'VIP Road', 'Chowringhee Road', 'Rashbehari Avenue', 'SP Mukherjee Road', 'Diamond Harbour Road'],
     mandals: ['Kolkata', 'South 24 Parganas', 'North 24 Parganas', 'Howrah'],
     taluks: ['Kolkata', 'Alipore', 'Sealdah'],
+  },
+  'Ahmedabad': {
+    state: 'Gujarat', country: 'India', countryCode: 'IN', pinPrefix: '380',
+    areas: ['Navrangpura', 'Satellite', 'Bodakdev', 'Vastrapur', 'Maninagar', 'Bopal', 'Prahlad Nagar', 'Chandkheda', 'Naranpura', 'Paldi', 'Ellisbridge', 'Thaltej'],
+    streets: ['SG Highway', 'CG Road', 'Ashram Road', 'Drive In Road', 'University Road', 'Sarkhej Road', '132 Feet Ring Road', 'Iscon Cross Road'],
+    mandals: ['Ahmedabad City', 'Daskroi', 'Sanand', 'Dholka'],
+    taluks: ['Ahmedabad City', 'Daskroi', 'Sanand'],
+  },
+  'Jaipur': {
+    state: 'Rajasthan', country: 'India', countryCode: 'IN', pinPrefix: '302',
+    areas: ['Malviya Nagar', 'Vaishali Nagar', 'C-Scheme', 'Mansarovar', 'Raja Park', 'Bani Park', 'Jagatpura', 'Tonk Road', 'Sodala', 'Jhotwara', 'Civil Lines'],
+    streets: ['MI Road', 'Tonk Road', 'JLN Marg', 'Ajmer Road', 'Sikar Road', 'Amer Road', 'Station Road', 'University Road'],
+    mandals: ['Jaipur', 'Sanganer', 'Amber', 'Bassi'],
+    taluks: ['Jaipur', 'Sanganer', 'Amber'],
+  },
+  'Lucknow': {
+    state: 'Uttar Pradesh', country: 'India', countryCode: 'IN', pinPrefix: '226',
+    areas: ['Gomti Nagar', 'Hazratganj', 'Aliganj', 'Indira Nagar', 'Aminabad', 'Alambagh', 'Mahanagar', 'Chowk', 'Rajajipuram', 'Vikas Nagar'],
+    streets: ['MG Road', 'Vidhan Sabha Marg', 'Shaheed Path', 'Faizabad Road', 'Kanpur Road', 'Sitapur Road', 'Ring Road'],
+    mandals: ['Lucknow', 'Malihabad', 'Mohanlalganj', 'Bakshi Ka Talab'],
+    taluks: ['Lucknow', 'Malihabad', 'Mohanlalganj'],
   },
   // US
   'New York': {
@@ -142,6 +166,10 @@ function generateAddress(cityName) {
   };
 }
 
+function formatFullAddress(addr) {
+  return `${addr.houseNo}, ${addr.street}, ${addr.area}, ${addr.mandal}, ${addr.city}, ${addr.state} ${addr.zipCode}, ${addr.country}`;
+}
+
 function generatePhone(countryCode) {
   const code = countryCode || 'DEFAULT';
   const phoneData = PHONE_FORMATS[code] || PHONE_FORMATS.DEFAULT;
@@ -195,11 +223,13 @@ function findClosestCity(detectedCity, countryCode) {
 
   // Try partial match (e.g. "Bengaluru" -> "Bangalore")
   const cityNames = Object.keys(CITY_DETAILS);
-  const lowerDetected = detectedCity.toLowerCase();
+  const lowerDetected = (detectedCity || '').toLowerCase();
 
-  for (const city of cityNames) {
-    if (city.toLowerCase().includes(lowerDetected) || lowerDetected.includes(city.toLowerCase())) {
-      return city;
+  if (lowerDetected) {
+    for (const city of cityNames) {
+      if (city.toLowerCase().includes(lowerDetected) || lowerDetected.includes(city.toLowerCase())) {
+        return city;
+      }
     }
   }
 
@@ -218,14 +248,24 @@ function findClosestCity(detectedCity, countryCode) {
 
 function TempAddress() {
   useSEO({
-    title: 'Free Temporary Address & Phone Number Generator',
-    description: 'Generate fake temporary addresses and phone numbers based on your location. Supports India, US, UK cities. Perfect for form testing and development.',
+    title: 'Random Address Generator — Free Fake Address & Phone Number',
+    description: 'Generate 20 random fake addresses and phone numbers for India, US and UK cities. Export as JSON or SQL for data testing and form validation. Free, no signup.',
   });
+
   const [addresses, setAddresses] = useState([]);
   const [phones, setPhones] = useState([]);
   const [selectedCity, setSelectedCity] = useState('');
   const [detectedLocation, setDetectedLocation] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
+
+  const allCities = useMemo(() => Object.keys(CITY_DETAILS), []);
+
+  const filteredCities = useMemo(() => {
+    const term = searchTerm.trim().toLowerCase();
+    if (!term) return allCities;
+    return allCities.filter((c) => c.toLowerCase().includes(term));
+  }, [searchTerm, allCities]);
 
   useEffect(() => {
     initLocation();
@@ -247,7 +287,7 @@ function TempAddress() {
     if (!cityData) return;
 
     const newAddresses = [];
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < ADDRESS_COUNT; i++) {
       newAddresses.push(generateAddress(city));
     }
 
@@ -260,21 +300,37 @@ function TempAddress() {
     setPhones(newPhones);
   };
 
+  const handleSelectCity = (city) => {
+    setSelectedCity(city);
+    generateAll(city);
+    toast.success(`Showing addresses for ${city}`);
+  };
+
   const handleRegenerate = () => {
     generateAll(selectedCity);
     toast.success('New addresses generated!');
   };
 
-  const copyField = (value, label) => {
+  const copyValue = (value, label) => {
     navigator.clipboard.writeText(value);
     toast.success(`${label} copied!`);
   };
 
-  const copyFullAddress = (addr) => {
-    const full = `${addr.houseNo}, ${addr.street}, ${addr.area}, ${addr.mandal}, ${addr.taluk}, ${addr.city}, ${addr.state}, ${addr.country} - ${addr.zipCode}`;
-    navigator.clipboard.writeText(full);
-    toast.success('Full address copied!');
-  };
+  // Build JSON export of full address strings
+  const jsonData = useMemo(() => {
+    if (!addresses.length) return '';
+    const arr = addresses.map((a) => formatFullAddress(a));
+    return JSON.stringify(arr, null, 0);
+  }, [addresses]);
+
+  // Build SQL export
+  const sqlData = useMemo(() => {
+    if (!addresses.length) return '';
+    const rows = addresses
+      .map((a) => `('${formatFullAddress(a).replace(/'/g, "''")}')`)
+      .join(',\n');
+    return `INSERT INTO ADDRESS (address) VALUES\n${rows};`;
+  }, [addresses]);
 
   const cityData = CITY_DETAILS[selectedCity] || {};
 
@@ -283,83 +339,147 @@ function TempAddress() {
       <div className="page-header">
         <h1 className="page-title">
           <MdLocationOn className="title-icon" />
-          Temp Address & Phone
+          Temp Address & Phone Generator
         </h1>
         <p className="page-subtitle">
-          Generate temporary addresses and phone numbers based on your location. Click any field to copy.
+          Following are {ADDRESS_COUNT} randomly generated addresses you can use for data testing and
+          address validation. Pick a city from the list or use your detected location.
         </p>
       </div>
 
-      <div className="controls-bar">
-        <div className="location-display">
-          <MdMyLocation />
-          <span>{cityData.country} — {selectedCity}</span>
-        </div>
-        <button className="regenerate-btn" onClick={handleRegenerate}>
-          <MdRefresh />
-          <span>Regenerate All</span>
-        </button>
+      <div className="ta-layout">
+        {/* ---------------- City search sidebar ---------------- */}
+        <aside className="city-sidebar">
+          <div className="city-search">
+            <MdSearch className="city-search-icon" />
+            <input
+              type="text"
+              placeholder="Search City"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
+          <ul className="city-list">
+            {filteredCities.length === 0 && (
+              <li className="city-empty">No cities found</li>
+            )}
+            {filteredCities.map((city) => (
+              <li
+                key={city}
+                className={`city-item ${city === selectedCity ? 'active' : ''}`}
+                onClick={() => handleSelectCity(city)}
+              >
+                <MdLocationOn className="city-pin" />
+                <span>{city}</span>
+              </li>
+            ))}
+          </ul>
+        </aside>
+
+        {/* ---------------- Main content ---------------- */}
+        <section className="ta-content">
+          <div className="controls-bar">
+            <div className="location-display">
+              <MdMyLocation />
+              <span>{cityData.country} — {selectedCity}</span>
+            </div>
+            <button className="regenerate-btn" onClick={handleRegenerate}>
+              <MdRefresh />
+              <span>Get More Random Address</span>
+            </button>
+          </div>
+
+          {loading ? (
+            <div className="loading-state">Detecting your location...</div>
+          ) : (
+            <>
+              {/* ---------------- Address table ---------------- */}
+              <div className="address-table-wrap">
+                <table className="address-table">
+                  <thead>
+                    <tr>
+                      <th className="col-sno">S.No.</th>
+                      <th>Address</th>
+                      <th className="col-copy"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {addresses.map((addr, index) => {
+                      const full = formatFullAddress(addr);
+                      return (
+                        <tr key={index}>
+                          <td className="col-sno">{index + 1}</td>
+                          <td className="col-address">{full}</td>
+                          <td className="col-copy">
+                            <button
+                              className="row-copy-btn"
+                              title="Copy address"
+                              onClick={() => copyValue(full, `Address ${index + 1}`)}
+                            >
+                              <MdContentCopy />
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+
+              <div className="table-actions">
+                <button className="regenerate-btn" onClick={handleRegenerate}>
+                  <MdRefresh />
+                  <span>Get More Random Address</span>
+                </button>
+              </div>
+
+              {/* ---------------- Phone numbers ---------------- */}
+              <section className="section">
+                <h2 className="section-title">
+                  <MdPhone /> Temporary Phone Numbers
+                </h2>
+                <div className="phone-grid">
+                  {phones.map((phone, index) => (
+                    <div key={index} className="phone-card" onClick={() => copyValue(phone, 'Phone number')}>
+                      <div className="phone-number">{phone}</div>
+                      <MdContentCopy className="phone-copy-icon" />
+                    </div>
+                  ))}
+                </div>
+              </section>
+
+              {/* ---------------- JSON export ---------------- */}
+              <section className="export-section">
+                <div className="export-header">
+                  <span className="export-badge json-badge">
+                    <MdDataObject /> JSON Data
+                  </span>
+                  <span className="export-note">Use this JSON format address data in your application for testing.</span>
+                  <button className="export-copy-btn" onClick={() => copyValue(jsonData, 'JSON data')}>
+                    <MdContentCopy /> Copy
+                  </button>
+                </div>
+                <pre className="export-block">{jsonData}</pre>
+              </section>
+
+              {/* ---------------- SQL export ---------------- */}
+              <section className="export-section">
+                <div className="export-header">
+                  <span className="export-badge sql-badge">
+                    <MdStorage /> SQL Query
+                  </span>
+                  <span className="export-note">Run this SQL query to create a random address table for data testing.</span>
+                  <button className="export-copy-btn" onClick={() => copyValue(sqlData, 'SQL query')}>
+                    <MdContentCopy /> Copy
+                  </button>
+                </div>
+                <pre className="export-block">{sqlData}</pre>
+              </section>
+            </>
+          )}
+        </section>
       </div>
-
-      {loading ? (
-        <div className="loading-state">Detecting your location...</div>
-      ) : (
-        <>
-          <section className="section">
-            <h2 className="section-title">
-              <MdLocationOn /> Temporary Addresses — {selectedCity}
-            </h2>
-            <div className="address-grid">
-              {addresses.map((addr, index) => (
-                <div key={index} className="address-card">
-                  <div className="card-header">
-                    <span className="card-number">Address {index + 1}</span>
-                    <button className="copy-all-btn" onClick={() => copyFullAddress(addr)}>
-                      <MdContentCopy /> Copy All
-                    </button>
-                  </div>
-                  <div className="fields">
-                    <FieldRow label="House/Plot" value={addr.houseNo} onCopy={copyField} />
-                    <FieldRow label="Street" value={addr.street} onCopy={copyField} />
-                    <FieldRow label="Area" value={addr.area} onCopy={copyField} />
-                    <FieldRow label="Mandal" value={addr.mandal} onCopy={copyField} />
-                    <FieldRow label="Taluk" value={addr.taluk} onCopy={copyField} />
-                    <FieldRow label="City" value={addr.city} onCopy={copyField} />
-                    <FieldRow label="State" value={addr.state} onCopy={copyField} />
-                    <FieldRow label="Country" value={addr.country} onCopy={copyField} />
-                    <FieldRow label="ZIP/PIN" value={addr.zipCode} onCopy={copyField} />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          <section className="section">
-            <h2 className="section-title">
-              <MdPhone /> Temporary Phone Numbers
-            </h2>
-            <div className="phone-grid">
-              {phones.map((phone, index) => (
-                <div key={index} className="phone-card" onClick={() => copyField(phone, 'Phone number')}>
-                  <div className="phone-number">{phone}</div>
-                  <MdContentCopy className="phone-copy-icon" />
-                </div>
-              ))}
-            </div>
-          </section>
-        </>
-      )}
     </main>
-  );
-}
-
-function FieldRow({ label, value, onCopy }) {
-  return (
-    <div className="field-row" onClick={() => onCopy(value, label)}>
-      <span className="field-label">{label}</span>
-      <span className="field-value">{value}</span>
-      <MdContentCopy className="field-copy" />
-    </div>
   );
 }
 

@@ -1,6 +1,6 @@
 .temp-address-page {
   flex: 1;
-  max-width: 950px;
+  max-width: 1200px;
   width: 100%;
   margin: 0 auto;
   padding: 2.5rem 1.5rem;
@@ -30,14 +30,116 @@
   color: #64748b;
   font-size: 0.95rem;
   margin-top: 0.5rem;
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ---------------- Layout ---------------- */
+.ta-layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+/* ---------------- City sidebar ---------------- */
+.city-sidebar {
+  background: #ffffff;
+  border: 1.5px solid #e8eaed;
+  border-radius: 14px;
+  padding: 1rem;
+  position: sticky;
+  top: 1rem;
+}
+
+.city-search {
+  position: relative;
+  margin-bottom: 0.8rem;
+}
+
+.city-search-icon {
+  position: absolute;
+  left: 0.7rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #94a3b8;
+  font-size: 1.1rem;
+}
+
+.city-search input {
+  width: 100%;
+  padding: 0.6rem 0.7rem 0.6rem 2.2rem;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-family: 'Inter', sans-serif;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.city-search input:focus {
+  border-color: #38b2ac;
+}
+
+.city-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 520px;
+  overflow-y: auto;
+}
+
+.city-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 0.6rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #334155;
+  font-weight: 500;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.city-item:hover {
+  background: #f0fdfa;
+}
+
+.city-item.active {
+  background: #38b2ac;
+  color: #ffffff;
+}
+
+.city-item.active .city-pin {
+  color: #ffffff;
+}
+
+.city-pin {
+  color: #38b2ac;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.city-empty {
+  padding: 0.8rem 0.6rem;
+  color: #94a3b8;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+/* ---------------- Content ---------------- */
+.ta-content {
+  min-width: 0;
 }
 
 .controls-bar {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   gap: 1rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   flex-wrap: wrap;
 }
 
@@ -79,6 +181,87 @@
   box-shadow: 0 6px 18px rgba(56, 178, 172, 0.3);
 }
 
+/* ---------------- Address table ---------------- */
+.address-table-wrap {
+  background: #ffffff;
+  border: 1.5px solid #e8eaed;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.address-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.address-table thead th {
+  background: #f8fafc;
+  text-align: left;
+  padding: 0.85rem 1rem;
+  font-weight: 700;
+  color: #475569;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  border-bottom: 2px solid #e8eaed;
+}
+
+.address-table td {
+  padding: 0.8rem 1rem;
+  border-bottom: 1px solid #f1f5f9;
+  color: #1e293b;
+  vertical-align: top;
+}
+
+.address-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.address-table tbody tr:hover {
+  background: #f0fdfa;
+}
+
+.col-sno {
+  width: 60px;
+  color: #64748b;
+  font-weight: 600;
+  text-align: center;
+}
+
+.col-address {
+  line-height: 1.5;
+}
+
+.col-copy {
+  width: 48px;
+  text-align: center;
+}
+
+.row-copy-btn {
+  border: none;
+  background: transparent;
+  color: #38b2ac;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0.3rem;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  transition: background 0.15s ease;
+}
+
+.row-copy-btn:hover {
+  background: #d7f5f1;
+}
+
+.table-actions {
+  display: flex;
+  justify-content: center;
+  margin: 1.5rem 0 2.5rem;
+}
+
+/* ---------------- Phones ---------------- */
 .section {
   margin-bottom: 2.5rem;
 }
@@ -97,109 +280,6 @@
 
 .section-title svg {
   color: #38b2ac;
-}
-
-.address-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.2rem;
-}
-
-.address-card {
-  background: #ffffff;
-  border-radius: 16px;
-  padding: 1.5rem;
-  border: 1.5px solid #e8eaed;
-  transition: all 0.2s ease;
-}
-
-.address-card:hover {
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-  border-color: #38b2ac;
-}
-
-.card-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 1rem;
-  padding-bottom: 0.7rem;
-  border-bottom: 1px solid #f1f5f9;
-}
-
-.card-number {
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: #38b2ac;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.copy-all-btn {
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
-  padding: 0.35rem 0.8rem;
-  border: 1.5px solid #38b2ac;
-  border-radius: 6px;
-  background: transparent;
-  color: #38b2ac;
-  font-size: 0.75rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-family: 'Inter', sans-serif;
-}
-
-.copy-all-btn:hover {
-  background: #38b2ac;
-  color: white;
-}
-
-.fields {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-
-.field-row {
-  display: flex;
-  align-items: center;
-  padding: 0.5rem 0.6rem;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.15s ease;
-}
-
-.field-row:hover {
-  background: #f0fdfa;
-}
-
-.field-row:hover .field-copy {
-  opacity: 1;
-}
-
-.field-label {
-  font-size: 0.75rem;
-  color: #94a3b8;
-  font-weight: 600;
-  min-width: 80px;
-  text-transform: uppercase;
-  letter-spacing: 0.3px;
-}
-
-.field-value {
-  flex: 1;
-  font-size: 0.88rem;
-  color: #1e293b;
-  font-weight: 500;
-}
-
-.field-copy {
-  font-size: 0.85rem;
-  color: #38b2ac;
-  opacity: 0;
-  transition: opacity 0.15s ease;
 }
 
 .phone-grid {
@@ -244,11 +324,102 @@
   opacity: 1;
 }
 
+/* ---------------- Export blocks (JSON / SQL) ---------------- */
+.export-section {
+  margin-bottom: 2rem;
+}
+
+.export-header {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 0.7rem;
+  flex-wrap: wrap;
+}
+
+.export-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.json-badge {
+  background: linear-gradient(135deg, #38b2ac, #2c9a8f);
+}
+
+.sql-badge {
+  background: linear-gradient(135deg, #4c6ef5, #3b5bdb);
+}
+
+.export-note {
+  color: #64748b;
+  font-size: 0.85rem;
+  flex: 1;
+  min-width: 180px;
+}
+
+.export-copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.4rem 0.9rem;
+  border: 1.5px solid #38b2ac;
+  border-radius: 8px;
+  background: transparent;
+  color: #38b2ac;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'Inter', sans-serif;
+}
+
+.export-copy-btn:hover {
+  background: #38b2ac;
+  color: #ffffff;
+}
+
+.export-block {
+  background: #f8fafc;
+  border: 1.5px solid #e8eaed;
+  border-radius: 10px;
+  padding: 1rem 1.2rem;
+  font-family: 'Menlo', 'Consolas', 'Courier New', monospace;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: #334155;
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: 320px;
+  overflow-y: auto;
+  margin: 0;
+}
+
 .loading-state {
   text-align: center;
   padding: 3rem;
   color: #64748b;
   font-size: 1rem;
+}
+
+/* ---------------- Responsive ---------------- */
+@media (max-width: 900px) {
+  .ta-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .city-sidebar {
+    position: static;
+  }
+
+  .city-list {
+    max-height: 240px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -260,15 +431,21 @@
     font-size: 1.4rem;
   }
 
-  .address-grid {
-    grid-template-columns: 1fr;
-  }
-
   .phone-grid {
     grid-template-columns: 1fr;
   }
 
   .controls-bar {
     flex-direction: column;
+    align-items: stretch;
+  }
+
+  .address-table {
+    font-size: 0.82rem;
+  }
+
+  .address-table thead th,
+  .address-table td {
+    padding: 0.6rem 0.7rem;
   }
 }
