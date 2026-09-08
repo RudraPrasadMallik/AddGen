@@ -5,5 +5,4 @@ User-agent: *
 Allow: /
 
 # Point crawlers to the sitemap.
-# NOTE: Update this URL to your real Vercel URL (or custom domain later).
-Sitemap: https://addrgen.vercel.app/sitemap.xml
+Sitemap: https://addrgen.onrender.com/sitemap.xml
