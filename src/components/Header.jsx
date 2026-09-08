@@ -14,10 +14,8 @@ function Header() {
     <header className="header">
       <div className="header-content">
         <Link to="/temp-address" className="logo">
-          <div className="logo-icon-wrap">
-            <span className="logo-nest">TN</span>
-          </div>
-          <span className="logo-text">Test<span className="logo-accent">Nest</span></span>
+          <img src="/logo.svg" alt="AddrGen logo" className="logo-img" width="36" height="36" />
+          <span className="logo-text">Addr<span className="logo-accent">Gen</span></span>
         </Link>
         <nav className="header-nav">
           {/* Only the Temp Address feature is enabled for this phased release */}

@@ -22,21 +22,11 @@
   text-decoration: none;
 }
 
-.logo-icon-wrap {
+.logo-img {
   width: 36px;
   height: 36px;
-  background: linear-gradient(135deg, #6c63ff, #38b2ac);
+  display: block;
   border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.logo-nest {
-  color: #ffffff;
-  font-size: 0.85rem;
-  font-weight: 900;
-  letter-spacing: -0.5px;
 }
 
 .logo-text {
@@ -46,7 +36,7 @@
 }
 
 .logo-accent {
-  color: #6c63ff;
+  color: #38b2ac;
 }
 
 .header-nav {
@@ -69,13 +59,13 @@
 }
 
 .nav-link:hover {
-  color: #6c63ff;
-  background: #f5f3ff;
+  color: #38b2ac;
+  background: #f0fdfa;
 }
 
 .nav-link.active {
-  color: #6c63ff;
-  background: #ede9fe;
+  color: #38b2ac;
+  background: #d7f5f1;
   font-weight: 600;
 }
 

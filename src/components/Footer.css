@@ -26,18 +26,12 @@
 .footer-logo {
   width: 26px;
   height: 26px;
-  background: linear-gradient(135deg, #6c63ff, #38b2ac);
   border-radius: 7px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 0.65rem;
-  font-weight: 900;
+  display: block;
 }
 
 .footer-icon {
-  color: #6c63ff;
+  color: #38b2ac;
   font-size: 1.1rem;
 }
 

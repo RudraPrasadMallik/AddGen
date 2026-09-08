@@ -6,11 +6,11 @@ function Footer() {
     <footer className="footer">
       <div className="footer-content">
         <div className="footer-brand">
-          <div className="footer-logo">TN</div>
-          <span>TestNest</span>
+          <img src="/logo.svg" alt="AddrGen logo" className="footer-logo" width="26" height="26" />
+          <span>AddrGen</span>
         </div>
         <p className="footer-text">
-          Temporary data for testing and privacy. All data auto-expires.
+          Random addresses & phone numbers for testing and form validation.
         </p>
       </div>
     </footer>

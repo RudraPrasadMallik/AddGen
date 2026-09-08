@@ -1,33 +1,45 @@
 import { useEffect } from 'react';
 
-// Brand suffix appended to page titles.
-const BRAND = 'TestNest';
+// Brand name used in titles and OG site name.
+const BRAND = 'AddrGen';
 // Default document title used when a page does not provide its own.
-const DEFAULT_TITLE = 'Random Address Generator | Free Fake Address & Phone Number Tool';
+const DEFAULT_TITLE = 'AddrGen — Random Address Generator | Free Fake Address & Phone Number';
+
+function setMeta(selector, attr, value) {
+  if (!value) return;
+  const el = document.querySelector(selector);
+  if (el) el.setAttribute(attr, value);
+}
 
 /**
- * Updates document title and meta description/OG tags for each page.
+ * Updates the document title and SEO meta tags (description, keywords,
+ * Open Graph, and Twitter) for the current page.
+ *
+ * @param {object}  opts
+ * @param {string}  opts.title        Page title (brand is appended automatically).
+ * @param {string}  opts.description  Meta description.
+ * @param {string} [opts.keywords]    Comma-separated keywords.
+ * @param {boolean} [opts.rawTitle]   If true, use title as-is without the brand suffix.
  */
-export function useSEO({ title, description }) {
+export function useSEO({ title, description, keywords, rawTitle = false }) {
   useEffect(() => {
-    // Update title
-    document.title = title ? `${title} | ${BRAND}` : DEFAULT_TITLE;
+    const fullTitle = title
+      ? (rawTitle ? title : `${title} | ${BRAND}`)
+      : DEFAULT_TITLE;
 
-    // Update meta description
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc && description) {
-      metaDesc.setAttribute('content', description);
-    }
+    // Title
+    document.title = fullTitle;
 
-    // Update OG tags
-    const ogTitle = document.querySelector('meta[property="og:title"]');
-    if (ogTitle && title) {
-      ogTitle.setAttribute('content', `${title} | ${BRAND}`);
-    }
+    // Standard meta
+    setMeta('meta[name="description"]', 'content', description);
+    setMeta('meta[name="keywords"]', 'content', keywords);
 
-    const ogDesc = document.querySelector('meta[property="og:description"]');
-    if (ogDesc && description) {
-      ogDesc.setAttribute('content', description);
-    }
-  }, [title, description]);
+    // Open Graph
+    setMeta('meta[property="og:title"]', 'content', fullTitle);
+    setMeta('meta[property="og:description"]', 'content', description);
+
+    // Twitter
+    setMeta('meta[name="twitter:title"]', 'content', fullTitle);
+    setMeta('meta[name="twitter:description"]', 'content', description);
+  }, [title, description, keywords, rawTitle]);
 }

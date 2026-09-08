@@ -247,11 +247,6 @@ function findClosestCity(detectedCity, countryCode) {
 }
 
 function TempAddress() {
-  useSEO({
-    title: 'Random Address Generator — Free Fake Address & Phone Number',
-    description: 'Generate 20 random fake addresses and phone numbers for India, US and UK cities. Export as JSON or SQL for data testing and form validation. Free, no signup.',
-  });
-
   const [addresses, setAddresses] = useState([]);
   const [phones, setPhones] = useState([]);
   const [selectedCity, setSelectedCity] = useState('');
@@ -266,6 +261,31 @@ function TempAddress() {
     if (!term) return allCities;
     return allCities.filter((c) => c.toLowerCase().includes(term));
   }, [searchTerm, allCities]);
+
+  // SEO: the site is a generic, multi-city address generator. The keywords and
+  // core title stay city-agnostic (a single city is only ever mentioned as an
+  // example, never repeated/stuffed). The selected city is appended lightly so
+  // the current view is descriptive without misrepresenting the tool.
+  const seo = useMemo(() => {
+    const GENERIC_KEYWORDS = 'random address generator, fake address generator, valid address generator, address generator for any city, temp address, fake phone number generator, address for testing, address validation, dummy address, JSON address data, SQL address data';
+    const cd = CITY_DETAILS[selectedCity];
+
+    if (selectedCity && cd) {
+      return {
+        title: `Random Address Generator — ${selectedCity} & any city`,
+        description: `Free random address generator for any city. Currently showing ${ADDRESS_COUNT} sample addresses and phone numbers for ${selectedCity}, ${cd.country} — pick any other city from the list. Export as JSON or SQL for data testing and form validation. No signup.`,
+        keywords: GENERIC_KEYWORDS,
+      };
+    }
+
+    return {
+      title: 'Random Address Generator — Free Fake Address & Phone Number',
+      description: `Free random address generator for any city. Instantly create ${ADDRESS_COUNT} fake addresses and phone numbers for any location, then export as JSON or SQL for data testing and form validation. No signup.`,
+      keywords: GENERIC_KEYWORDS,
+    };
+  }, [selectedCity]);
+
+  useSEO(seo);
 
   useEffect(() => {
     initLocation();
@@ -339,11 +359,11 @@ function TempAddress() {
       <div className="page-header">
         <h1 className="page-title">
           <MdLocationOn className="title-icon" />
-          Temp Address & Phone Generator
+          {selectedCity ? `${selectedCity} Random Address Generator` : 'Random Address Generator'}
         </h1>
         <p className="page-subtitle">
-          Following are {ADDRESS_COUNT} randomly generated addresses you can use for data testing and
-          address validation. Pick a city from the list or use your detected location.
+          Following are {ADDRESS_COUNT} randomly generated{selectedCity ? ` ${selectedCity}` : ''} addresses and phone
+          numbers you can use for data testing and address validation. Pick any city from the list or use your detected location.
         </p>
       </div>
 
