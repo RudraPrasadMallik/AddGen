@@ -5,4 +5,4 @@ User-agent: *
 Allow: /
 
 # Point crawlers to the sitemap.
-Sitemap: https://addrgen.vercel.app/sitemap.xml
+Sitemap: https://addgen-woad.vercel.app/sitemap.xml
