@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { toast } from 'react-toastify';
-import { MdContentCopy, MdRefresh, MdLocationOn, MdPhone, MdMyLocation, MdSearch, MdDataObject, MdStorage } from 'react-icons/md';
+// MdPhone kept for when the phone number section is re-enabled.
+import { MdContentCopy, MdRefresh, MdLocationOn, MdMyLocation, MdSearch, MdDataObject, MdStorage } from 'react-icons/md';
 import { useSEO } from '../utils/useSEO';
+import AdSlot from '../components/AdSlot';
 import './TempAddress.css';
 
 // How many random addresses to generate per city (matches reference sites)
@@ -248,7 +250,8 @@ function findClosestCity(detectedCity, countryCode) {
 
 function TempAddress() {
   const [addresses, setAddresses] = useState([]);
-  const [phones, setPhones] = useState([]);
+  // Phone numbers disabled for now — re-enable with the phone section below.
+  // const [phones, setPhones] = useState([]);
   const [selectedCity, setSelectedCity] = useState('');
   const [detectedLocation, setDetectedLocation] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
@@ -273,14 +276,14 @@ function TempAddress() {
     if (selectedCity && cd) {
       return {
         title: `Random Address Generator — ${selectedCity} & any city`,
-        description: `Free random address generator for any city. Currently showing ${ADDRESS_COUNT} sample addresses and phone numbers for ${selectedCity}, ${cd.country} — pick any other city from the list. Export as JSON or SQL for data testing and form validation. No signup.`,
+        description: `Free random address generator for any city. Currently showing ${ADDRESS_COUNT} sample addresses for ${selectedCity}, ${cd.country} — pick any other city from the list. Export as JSON or SQL for data testing and form validation. No signup.`,
         keywords: GENERIC_KEYWORDS,
       };
     }
 
     return {
-      title: 'Random Address Generator — Free Fake Address & Phone Number',
-      description: `Free random address generator for any city. Instantly create ${ADDRESS_COUNT} fake addresses and phone numbers for any location, then export as JSON or SQL for data testing and form validation. No signup.`,
+      title: 'Random Address Generator — Free Fake Address for Any City',
+      description: `Free random address generator for any city. Instantly create ${ADDRESS_COUNT} fake addresses for any location, then export as JSON or SQL for data testing and form validation. No signup.`,
       keywords: GENERIC_KEYWORDS,
     };
   }, [selectedCity]);
@@ -311,13 +314,14 @@ function TempAddress() {
       newAddresses.push(generateAddress(city));
     }
 
-    const newPhones = [];
-    for (let i = 0; i < 3; i++) {
-      newPhones.push(generatePhone(cityData.countryCode));
-    }
+    // Phone number generation disabled for now — re-enable with the phone section.
+    // const newPhones = [];
+    // for (let i = 0; i < 3; i++) {
+    //   newPhones.push(generatePhone(cityData.countryCode));
+    // }
 
     setAddresses(newAddresses);
-    setPhones(newPhones);
+    // setPhones(newPhones);
   };
 
   const handleSelectCity = (city) => {
@@ -362,8 +366,8 @@ function TempAddress() {
           {selectedCity ? `${selectedCity} Random Address Generator` : 'Random Address Generator'}
         </h1>
         <p className="page-subtitle">
-          Following are {ADDRESS_COUNT} randomly generated{selectedCity ? ` ${selectedCity}` : ''} addresses and phone
-          numbers you can use for data testing and address validation. Pick any city from the list or use your detected location.
+          Following are {ADDRESS_COUNT} randomly generated{selectedCity ? ` ${selectedCity}` : ''} addresses you can use
+          for data testing and address validation. Pick any city from the list or use your detected location.
         </p>
       </div>
 
@@ -453,7 +457,10 @@ function TempAddress() {
                 </button>
               </div>
 
-              {/* ---------------- Phone numbers ---------------- */}
+              {/* ---------------- Ad slot (placeholder until launch) ---------------- */}
+              <AdSlot label="Advertisement" />
+
+              {/* ---------------- Phone numbers (disabled for now) ----------------
               <section className="section">
                 <h2 className="section-title">
                   <MdPhone /> Temporary Phone Numbers
@@ -467,6 +474,7 @@ function TempAddress() {
                   ))}
                 </div>
               </section>
+              ------------------------------------------------------------------- */}
 
               {/* ---------------- JSON export ---------------- */}
               <section className="export-section">
