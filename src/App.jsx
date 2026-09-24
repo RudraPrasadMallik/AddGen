@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Header from './components/Header';
@@ -12,6 +12,7 @@ import PrivacyPolicy from './pages/PrivacyPolicy';
 import Terms from './pages/Terms';
 import ToolsDirectory from './pages/ToolsDirectory';
 import ToolPage from './pages/ToolPage';
+import NotFound from './pages/NotFound';
 import './App.css';
 
 // ---------------------------------------------------------------------------
@@ -56,8 +57,8 @@ function App() {
           <Route path="/base64" element={<Base64Tool />} />
           --- */}
 
-          {/* Any unknown route falls back to the Temp Address page */}
-          <Route path="*" element={<Navigate to="/temp-address" replace />} />
+          {/* Unknown routes render a proper 404 page (avoids SEO soft-404s) */}
+          <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />
         <ToastContainer

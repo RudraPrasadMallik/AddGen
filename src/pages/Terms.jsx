@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useSEO } from '../utils/useSEO';
 import './LegalPages.css';
 
@@ -67,7 +68,7 @@ function Terms() {
 
       <h2>7. Contact</h2>
       <p>
-        Questions about these Terms? Visit our <a href="/contact">Contact</a> page.
+        Questions about these Terms? Visit our <Link to="/contact">Contact</Link> page.
       </p>
     </main>
   );

@@ -44,9 +44,10 @@ export function jsonUnescape(input) {
   catch { return 'Invalid escaped string.'; }
 }
 export function stripHtml(input) {
-  const el = document.createElement('div');
-  el.innerHTML = input;
-  return el.textContent || el.innerText || '';
+  // Parse into an inert document: scripts do not execute and resources such as
+  // <img src> are not fetched, so this is safe against XSS from pasted markup.
+  const doc = new DOMParser().parseFromString(input, 'text/html');
+  return doc.body ? (doc.body.textContent || '') : '';
 }
 export function extractTextFromHtml(input) { return stripHtml(input); }
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useSEO } from '../utils/useSEO';
 import './LegalPages.css';
 
@@ -75,8 +76,9 @@ function PrivacyPolicy() {
 
       <h2>7. Contact</h2>
       <p>
-        If you have questions about this Privacy Policy, please visit our{' '}
-        <a href="/contact">Contact</a> page.
+        If you have questions about this Privacy Policy, email us at{' '}
+        <a href="mailto:testovo.tools@gmail.com">testovo.tools@gmail.com</a> or visit our{' '}
+        <Link to="/contact">Contact</Link> page.
       </p>
     </main>
   );

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { MdEmail, MdLocationOn } from 'react-icons/md';
 import { useSEO } from '../utils/useSEO';
 import './LegalPages.css';
@@ -20,8 +21,7 @@ function Contact() {
       <div className="contact-card">
         <div className="contact-row">
           <MdEmail />
-          {/* TODO: Add the support email here once created. */}
-          <span className="contact-placeholder">Email: (coming soon)</span>
+          <span>Email: <a href="mailto:testovo.tools@gmail.com">testovo.tools@gmail.com</a></span>
         </div>
         <div className="contact-row">
           <MdLocationOn />
@@ -30,7 +30,7 @@ function Contact() {
       </div>
 
       <p style={{ marginTop: '1.2rem' }}>
-        For details on how we handle data, see our <a href="/privacy-policy">Privacy Policy</a>.
+        For details on how we handle data, see our <Link to="/privacy-policy">Privacy Policy</Link>.
       </p>
     </main>
   );
