@@ -4,6 +4,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import ScrollToTop from './components/ScrollToTop';
 import TempAddress from './pages/TempAddress';
 import About from './pages/About';
 import Contact from './pages/Contact';
@@ -29,6 +30,7 @@ function App() {
   return (
     <Router>
       <div className="app">
+        <ScrollToTop />
         <Header />
         <Routes>
           {/* Temp Address is the landing page for this phased release */}
