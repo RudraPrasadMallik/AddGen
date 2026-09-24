@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import { MdContentCopy, MdRefresh, MdPlayArrow, MdArrowBack } from 'react-icons/md';
 import { useSEO } from '../utils/useSEO';
 import { TOOLS_BY_SLUG } from '../tools/registry';
+import { getToolContent } from '../tools/toolContent';
 import './ToolPage.css';
 
 // Build the default options object from a tool's option descriptors.
@@ -178,7 +179,75 @@ function ToolPage() {
           value={output}
         />
       </div>
+
+      {/* Informational content */}
+      <ToolContent tool={tool} />
     </main>
+  );
+}
+
+// Renders the What / How / Use cases / FAQ content for a tool, plus FAQ
+// structured data (JSON-LD) to help search engines show rich results.
+function ToolContent({ tool }) {
+  const content = getToolContent(tool);
+
+  const faqJsonLd = content.faqs && content.faqs.length
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: content.faqs.map((f) => ({
+          '@type': 'Question',
+          name: f.q,
+          acceptedAnswer: { '@type': 'Answer', text: f.a },
+        })),
+      }
+    : null;
+
+  return (
+    <section className="tool-content">
+      {content.intro && content.intro.length > 0 && (
+        <div className="tc-block">
+          <h2>What the {tool.name} Does</h2>
+          {content.intro.map((p, i) => <p key={i}>{p}</p>)}
+        </div>
+      )}
+
+      {content.howTo && content.howTo.length > 0 && (
+        <div className="tc-block">
+          <h2>How to Use the {tool.name}</h2>
+          <ol className="tc-steps">
+            {content.howTo.map((s, i) => <li key={i}>{s}</li>)}
+          </ol>
+        </div>
+      )}
+
+      {content.useCases && content.useCases.length > 0 && (
+        <div className="tc-block">
+          <h2>Common Use Cases</h2>
+          <ul className="tc-list">
+            {content.useCases.map((u, i) => <li key={i}>{u}</li>)}
+          </ul>
+        </div>
+      )}
+
+      {content.faqs && content.faqs.length > 0 && (
+        <div className="tc-block">
+          <h2>Frequently Asked Questions</h2>
+          <div className="tc-faqs">
+            {content.faqs.map((f, i) => (
+              <div key={i} className="tc-faq">
+                <h3 className="tc-faq-q">{f.q}</h3>
+                <p className="tc-faq-a">{f.a}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {faqJsonLd && (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
+      )}
+    </section>
   );
 }
 

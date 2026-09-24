@@ -24,9 +24,9 @@ function Header() {
             <MdLocationOn />
             <span>Temp Address</span>
           </Link>
-          <Link to="/tools" className={`nav-link ${onTools ? 'active' : ''}`}>
+          <Link to="/tools" className={`nav-btn ${onTools ? 'active' : ''}`}>
             <MdBuild />
-            <span>Tools</span>
+            <span>All Tools</span>
           </Link>
         </nav>
       </div>
