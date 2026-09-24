@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { MdSearch } from 'react-icons/md';
 import { useSEO } from '../utils/useSEO';
 import { TOOLS, CATEGORIES } from '../tools/registry';
@@ -12,22 +12,35 @@ function ToolsDirectory() {
   });
 
   const [query, setQuery] = useState('');
+  const [searchParams] = useSearchParams();
+  // Optional category filter from the URL (e.g. /tools?category=Converters).
+  const categoryParam = searchParams.get('category');
+  const activeCategory = CATEGORIES.includes(categoryParam) ? categoryParam : null;
+
+  const visibleCategories = activeCategory ? [activeCategory] : CATEGORIES;
 
   const grouped = useMemo(() => {
     const q = query.trim().toLowerCase();
     const map = {};
     for (const cat of CATEGORIES) map[cat] = [];
     for (const t of TOOLS) {
+      if (activeCategory && t.category !== activeCategory) continue;
       if (q && !(`${t.name} ${t.description}`.toLowerCase().includes(q))) continue;
       (map[t.category] = map[t.category] || []).push(t);
     }
     return map;
-  }, [query]);
+  }, [query, activeCategory]);
 
   const totalMatches = useMemo(
     () => Object.values(grouped).reduce((n, arr) => n + arr.length, 0),
     [grouped]
   );
+
+  // The Random Address Generator is a rich standalone tool (not in the registry).
+  // Show it as a featured entry when it matches the current search and no
+  // specific category filter is active.
+  const q = query.trim().toLowerCase();
+  const showAddress = !activeCategory && (!q || 'random address generator fake address for any city'.includes(q));
 
   return (
     <main className="tools-dir">
@@ -48,11 +61,23 @@ function ToolsDirectory() {
         </div>
       </div>
 
-      {totalMatches === 0 && (
+      {totalMatches === 0 && !showAddress && (
         <p className="tools-empty">No tools match “{query}”.</p>
       )}
 
-      {CATEGORIES.map((cat) => (
+      {showAddress && (
+        <section className="tools-cat">
+          <h2 className="tools-cat-title">Featured</h2>
+          <div className="tools-grid">
+            <Link to="/temp-address" className="tool-card">
+              <span className="tool-card-name">Random Address Generator</span>
+              <span className="tool-card-desc">Generate fake addresses for any city and export as JSON or SQL.</span>
+            </Link>
+          </div>
+        </section>
+      )}
+
+      {visibleCategories.map((cat) => (
         grouped[cat] && grouped[cat].length > 0 && (
           <section key={cat} className="tools-cat">
             <h2 className="tools-cat-title">{cat}</h2>

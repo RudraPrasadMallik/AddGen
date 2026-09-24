@@ -1,147 +1,116 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { MdEmail, MdLocationOn, MdArrowForward, MdShield, MdSpeed, MdDevices, MdVpnKey, MdLock, MdWebhook, MdCode } from 'react-icons/md';
+import React, { useMemo } from 'react';
+import { Link } from 'react-router-dom';
+import {
+  MdLocationOn, MdBuild, MdBolt, MdLockOutline, MdCloudOff, MdArrowForward,
+} from 'react-icons/md';
 import { useSEO } from '../utils/useSEO';
+import { TOOLS, CATEGORIES, TOOLS_BY_SLUG } from '../tools/registry';
 import './Home.css';
+
+// Slugs of a few high-value tools to feature on the landing page.
+const POPULAR_SLUGS = [
+  'random-password-generator',
+  'random-uuid-generator',
+  'base64-encoder',
+  'json-prettifier',
+  'lorem-ipsum-generator',
+  'md5-hash-calculator',
+];
 
 function Home() {
   useSEO({
-    title: 'Free Temp Mail, Address & Developer Tools',
-    description: 'TestNest is a free developer toolkit. Generate temporary emails, fake addresses, phone numbers, JWT tokens, PKCE codes, webhook URLs, and Base64 encoding — no signup required.',
+    title: 'Testovo — Free Online Tools for Developers & Testers',
+    description: 'Testovo is a free collection of browser-based tools for developers and testers: random data generators, converters, encoders/decoders, minifiers, hash calculators, and text utilities. No signup, nothing uploaded.',
+    rawTitle: true,
   });
-  const navigate = useNavigate();
 
-  const tools = [
-    {
-      id: 'temp-mail',
-      icon: <MdEmail />,
-      title: 'Temp Mail',
-      description: 'Disposable email addresses. Receive real emails without revealing your identity.',
-      color: '#6c63ff',
-      gradient: 'linear-gradient(135deg, #6c63ff, #4834d4)',
-      path: '/temp-mail',
-      tag: 'Popular',
-    },
-    {
-      id: 'temp-address',
-      icon: <MdLocationOn />,
-      title: 'Temp Address & Phone',
-      description: 'Location-based fake addresses and phone numbers for form testing.',
-      color: '#38b2ac',
-      gradient: 'linear-gradient(135deg, #38b2ac, #0d9488)',
-      path: '/temp-address',
-      tag: 'Location Aware',
-    },
-    {
-      id: 'pkce',
-      icon: <MdVpnKey />,
-      title: 'PKCE Generator',
-      description: 'Generate code_verifier and code_challenge pairs for OAuth 2.0 flows.',
-      color: '#e67e22',
-      gradient: 'linear-gradient(135deg, #e67e22, #d35400)',
-      path: '/pkce',
-      tag: 'Security',
-    },
-    {
-      id: 'jwt',
-      icon: <MdLock />,
-      title: 'JWT Tool',
-      description: 'Encode, decode, and verify JSON Web Tokens with all standard signing algorithms.',
-      color: '#dc2626',
-      gradient: 'linear-gradient(135deg, #dc2626, #b91c1c)',
-      path: '/jwt',
-      tag: 'Auth',
-    },
-    {
-      id: 'webhook',
-      icon: <MdWebhook />,
-      title: 'Webhook Tester',
-      description: 'Get a unique URL to capture and inspect incoming webhook requests in real-time.',
-      color: '#7c3aed',
-      gradient: 'linear-gradient(135deg, #7c3aed, #6d28d9)',
-      path: '/webhook',
-      tag: 'Integration',
-    },
-    {
-      id: 'base64',
-      icon: <MdCode />,
-      title: 'Base64 Encoder/Decoder',
-      description: 'Encode text to Base64 or decode Base64 strings back to plain text.',
-      color: '#0891b2',
-      gradient: 'linear-gradient(135deg, #0891b2, #0e7490)',
-      path: '/base64',
-      tag: 'Utility',
-    },
-  ];
+  const popular = useMemo(
+    () => POPULAR_SLUGS.map((s) => TOOLS_BY_SLUG[s]).filter(Boolean),
+    []
+  );
 
-  const features = [
-    {
-      icon: <MdShield />,
-      title: 'No Sign Up',
-      description: 'Use instantly. No accounts, no tracking.',
-    },
-    {
-      icon: <MdSpeed />,
-      title: 'Fast & Lightweight',
-      description: 'Data generated in milliseconds. Zero lag.',
-    },
-    {
-      icon: <MdDevices />,
-      title: 'Built for Devs',
-      description: 'Made for testers, QA, and developers.',
-    },
-  ];
+  const countsByCategory = useMemo(() => {
+    const map = {};
+    for (const cat of CATEGORIES) map[cat] = 0;
+    for (const t of TOOLS) map[t.category] = (map[t.category] || 0) + 1;
+    return map;
+  }, []);
+
+
 
   return (
     <main className="home">
+      {/* Hero */}
       <section className="hero">
-        <div className="hero-badge">🛠️ Developer Toolkit</div>
         <h1 className="hero-title">
-          Temporary Data,<br />
-          <span className="highlight">Real Privacy.</span>
+          Free Online Tools for <span className="hero-accent">Developers &amp; Testers</span>
         </h1>
         <p className="hero-subtitle">
-          Generate disposable emails, fake addresses, phone numbers, and security tokens — all in one place. No signup. No tracking.
+          Testovo brings together {TOOLS.length}+ fast, privacy-friendly utilities — generators,
+          converters, encoders, hash calculators, and text tools. No signup. Nothing uploaded.
+          Everything runs right in your browser.
         </p>
+        <div className="hero-cta">
+          <Link to="/tools" className="btn btn-primary"><MdBuild /> Browse All Tools</Link>
+          <Link to="/temp-address" className="btn btn-secondary"><MdLocationOn /> Address Generator</Link>
+        </div>
       </section>
 
-      <section className="tools-section">
-        <div className="tools-grid">
-          {tools.map((tool) => (
-            <div
-              key={tool.id}
-              className="tool-card"
-              onClick={() => navigate(tool.path)}
-            >
-              <div className="tool-card-top" style={{ background: tool.gradient }}>
-                <div className="tool-icon">{tool.icon}</div>
-                <span className="tool-tag">{tool.tag}</span>
-              </div>
-              <div className="tool-card-body">
-                <h3 className="tool-title">{tool.title}</h3>
-                <p className="tool-description">{tool.description}</p>
-                <div className="tool-action" style={{ color: tool.color }}>
-                  <span>Open Tool</span>
-                  <MdArrowForward />
-                </div>
-              </div>
-            </div>
+      {/* Popular tools */}
+      <section className="home-section">
+        <h2 className="home-h2">Popular Tools</h2>
+        <div className="home-grid">
+          {/* Featured: Temp Address (lives outside the tools registry) */}
+          <Link to="/temp-address" className="home-card featured">
+            <span className="home-card-badge">Featured</span>
+            <span className="home-card-name">Random Address Generator</span>
+            <span className="home-card-desc">Generate fake addresses for any city, export as JSON or SQL.</span>
+          </Link>
+          {popular.map((t) => (
+            <Link key={t.slug} to={`/tools/${t.slug}`} className="home-card">
+              <span className="home-card-name">{t.name}</span>
+              <span className="home-card-desc">{t.description}</span>
+            </Link>
           ))}
         </div>
       </section>
 
-      <section className="features">
-        <div className="features-header">
-          <h2>Why TestNest?</h2>
-        </div>
-        <div className="features-grid">
-          {features.map((feature, index) => (
-            <div key={index} className="feature-item">
-              <div className="feature-icon">{feature.icon}</div>
-              <h4 className="feature-title">{feature.title}</h4>
-              <p className="feature-desc">{feature.description}</p>
-            </div>
+      {/* Categories */}
+      <section className="home-section">
+        <h2 className="home-h2">Browse by Category</h2>
+        <div className="home-cats">
+          {CATEGORIES.map((cat) => (
+            <Link key={cat} to={`/tools?category=${encodeURIComponent(cat)}`} className="home-cat">
+              <span className="home-cat-name">{cat}</span>
+              <span className="home-cat-count">{countsByCategory[cat]} tools</span>
+              <MdArrowForward className="home-cat-arrow" />
+            </Link>
           ))}
+        </div>
+        <div className="home-allcta">
+          <Link to="/tools" className="btn btn-primary"><MdBuild /> See All Tools</Link>
+        </div>
+      </section>
+
+      {/* Why Testovo */}
+      <section className="home-section">
+        <h2 className="home-h2">Why Testovo?</h2>
+        <div className="home-why">
+          <div className="why-item">
+            <MdBolt className="why-icon" />
+            <h3>Instant &amp; free</h3>
+            <p>No signup, no limits, no cost. Open a tool and use it immediately.</p>
+          </div>
+          <div className="why-item">
+            <MdCloudOff className="why-icon" />
+            <h3>Runs in your browser</h3>
+            <p>Every tool works locally. Your input is never uploaded to a server.</p>
+          </div>
+          <div className="why-item">
+            <MdLockOutline className="why-icon" />
+            <h3>Privacy-friendly</h3>
+            <p>Nothing you type is logged or stored. Close the tab and it's gone.</p>
+          </div>
         </div>
       </section>
     </main>
