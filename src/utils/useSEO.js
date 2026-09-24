@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 
 // Brand name used in titles and OG site name.
-const BRAND = 'AddrGen';
+const BRAND = 'Testovo';
 // Default document title used when a page does not provide its own.
-const DEFAULT_TITLE = 'AddrGen — Random Address Generator | Free Fake Address & Phone Number';
+const DEFAULT_TITLE = 'Testovo — Free Online Tools for Developers & Testers';
 
 function setMeta(selector, attr, value) {
   if (!value) return;

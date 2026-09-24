@@ -1,4 +1,4 @@
-# robots.txt for AddrGen — Random Address Generator
+# robots.txt for Testovo — Free Online Tools for Developers & Testers
 # Allow all search engines to crawl the entire site.
 
 User-agent: *

@@ -1,0 +1,110 @@
+.tools-dir {
+  flex: 1;
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 3.5rem;
+}
+
+.tools-dir-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.tools-dir-header h1 {
+  font-size: 1.9rem;
+  font-weight: 800;
+  color: #1a1a2e;
+  margin-bottom: 0.5rem;
+}
+
+.tools-dir-header p {
+  color: #64748b;
+  font-size: 0.95rem;
+  max-width: 680px;
+  margin: 0 auto 1.4rem;
+  line-height: 1.6;
+}
+
+.tools-search {
+  position: relative;
+  max-width: 420px;
+  margin: 0 auto;
+}
+.tools-search-icon {
+  position: absolute;
+  left: 0.8rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #94a3b8;
+  font-size: 1.2rem;
+}
+.tools-search input {
+  width: 100%;
+  padding: 0.7rem 0.9rem 0.7rem 2.4rem;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  outline: none;
+}
+.tools-search input:focus { border-color: #38b2ac; }
+
+.tools-empty {
+  text-align: center;
+  color: #94a3b8;
+  padding: 2rem;
+}
+
+.tools-cat {
+  margin-bottom: 2rem;
+}
+
+.tools-cat-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin-bottom: 0.9rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #e8eaed;
+}
+
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 0.9rem;
+}
+
+.tool-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.9rem 1rem;
+  border: 1.5px solid #e8eaed;
+  border-radius: 12px;
+  background: #fff;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+.tool-card:hover {
+  border-color: #38b2ac;
+  box-shadow: 0 6px 18px rgba(56, 178, 172, 0.12);
+  transform: translateY(-2px);
+}
+
+.tool-card-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+.tool-card-desc {
+  font-size: 0.8rem;
+  color: #64748b;
+  line-height: 1.45;
+}
+
+@media (max-width: 768px) {
+  .tools-dir { padding: 1.8rem 1rem 2.5rem; }
+  .tools-dir-header h1 { font-size: 1.5rem; }
+  .tools-grid { grid-template-columns: 1fr; }
+}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { MdLocationOn } from 'react-icons/md';
+import { MdLocationOn, MdBuild } from 'react-icons/md';
 // Icons for disabled features (kept for easy re-enable):
 // import { MdEmail, MdHome, MdVpnKey, MdLock, MdWebhook, MdCode } from 'react-icons/md';
 import './Header.css';
@@ -13,15 +13,19 @@ function Header() {
   return (
     <header className="header">
       <div className="header-content">
-        <Link to="/temp-address" className="logo">
-          <img src="/logo.svg" alt="AddrGen logo" className="logo-img" width="36" height="36" />
-          <span className="logo-text">Addr<span className="logo-accent">Gen</span></span>
+        <Link to="/" className="logo">
+          <img src="/logo.svg" alt="Testovo logo" className="logo-img" width="36" height="36" />
+          <span className="logo-text">Test<span className="logo-accent">ovo</span></span>
         </Link>
         <nav className="header-nav">
           {/* Only the Temp Address feature is enabled for this phased release */}
           <Link to="/temp-address" className={`nav-link ${isActive('/temp-address') || isActive('/') ? 'active' : ''}`}>
             <MdLocationOn />
             <span>Temp Address</span>
+          </Link>
+          <Link to="/tools" className={`nav-link ${location.pathname.startsWith('/tools') ? 'active' : ''}`}>
+            <MdBuild />
+            <span>Tools</span>
           </Link>
 
           {/* --- Disabled for phased release ---
