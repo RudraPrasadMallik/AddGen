@@ -359,6 +359,7 @@ function TempAddress() {
   const cityData = CITY_DETAILS[selectedCity] || {};
 
   return (
+    <div className="page-with-rail">
     <main className="temp-address-page">
       <div className="page-header">
         <h1 className="page-title">
@@ -508,6 +509,12 @@ function TempAddress() {
         </section>
       </div>
     </main>
+
+      {/* Right sidebar ad rail (hidden on small screens via CSS) */}
+      <aside className="page-rail">
+        <AdSlot label="Advertisement" className="rail-ad" />
+      </aside>
+    </div>
   );
 }
 

@@ -5,6 +5,7 @@ import {
 } from 'react-icons/md';
 import { useSEO } from '../utils/useSEO';
 import { TOOLS, CATEGORIES, TOOLS_BY_SLUG } from '../tools/registry';
+import AdSlot from '../components/AdSlot';
 import './Home.css';
 
 // Slugs of a few high-value tools to feature on the landing page.
@@ -73,6 +74,11 @@ function Home() {
             </Link>
           ))}
         </div>
+      </section>
+
+      {/* Mid-content ad */}
+      <section className="home-section">
+        <AdSlot label="Advertisement" />
       </section>
 
       {/* Categories */}

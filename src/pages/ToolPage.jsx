@@ -5,6 +5,7 @@ import { MdContentCopy, MdRefresh, MdPlayArrow, MdArrowBack } from 'react-icons/
 import { useSEO } from '../utils/useSEO';
 import { TOOLS_BY_SLUG } from '../tools/registry';
 import { getToolContent } from '../tools/toolContent';
+import AdSlot from '../components/AdSlot';
 import './ToolPage.css';
 
 // Build the default options object from a tool's option descriptors.
@@ -84,6 +85,7 @@ function ToolPage() {
   const showInput = tool.kind === 'transform' || tool.kind === 'asyncTransform';
 
   return (
+    <div className="page-with-rail">
     <main className="tool-page">
       <div className="tool-breadcrumb">
         <Link to="/tools"><MdArrowBack /> All Tools</Link>
@@ -180,9 +182,18 @@ function ToolPage() {
         />
       </div>
 
+      {/* Mid-content ad */}
+      <AdSlot label="Advertisement" />
+
       {/* Informational content */}
       <ToolContent tool={tool} />
     </main>
+
+      {/* Right sidebar ad rail (hidden on small screens via CSS) */}
+      <aside className="page-rail">
+        <AdSlot label="Advertisement" className="rail-ad" />
+      </aside>
+    </div>
   );
 }
 

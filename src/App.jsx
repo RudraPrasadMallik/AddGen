@@ -4,6 +4,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import BottomAd from './components/BottomAd';
 import ScrollToTop from './components/ScrollToTop';
 import Home from './pages/Home';
 import TempAddress from './pages/TempAddress';
@@ -59,6 +60,7 @@ function App() {
           {/* Unknown routes render a proper 404 page (avoids SEO soft-404s) */}
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <BottomAd />
         <Footer />
         <ToastContainer
           position="bottom-right"

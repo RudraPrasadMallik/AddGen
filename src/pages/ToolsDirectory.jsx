@@ -3,6 +3,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { MdSearch } from 'react-icons/md';
 import { useSEO } from '../utils/useSEO';
 import { TOOLS, CATEGORIES } from '../tools/registry';
+import AdSlot from '../components/AdSlot';
 import './ToolsDirectory.css';
 
 function ToolsDirectory() {
@@ -64,6 +65,9 @@ function ToolsDirectory() {
       {totalMatches === 0 && !showAddress && (
         <p className="tools-empty">No tools match “{query}”.</p>
       )}
+
+      {/* Top banner ad */}
+      <AdSlot label="Advertisement" />
 
       {showAddress && (
         <section className="tools-cat">
